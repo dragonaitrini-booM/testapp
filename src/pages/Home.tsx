@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 import ListGroup from '../components/ListGroup';
 import Alert from '../components/Alert';
 import { Button } from '../components/Button';
+import { withCache } from '../utils/cache';
+import { handleSecureError } from '../utils/errors';
+import { sanitizeInput, validateURL } from '../utils/validation';
 
 // Inline Zap (lightning) icon
 const ZapIcon = () => (
@@ -27,15 +30,7 @@ function Home() {
   type Status = 'idle' | 'training' | 'ready' | 'error';
   const [agentStatus, setAgentStatus] = useState<Status>('idle');
   const [businessUrl, setBusinessUrl] = useState('');
-
-  const isValidUrl = (url: string): boolean => {
-    try {
-      const u = new URL(url);
-      return u.protocol === 'https:' || u.protocol === 'http:';
-    } catch {
-      return false;
-    }
-  };
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const isSuspiciousUrl = (url: string): boolean => {
     try {
@@ -46,15 +41,30 @@ function Home() {
     }
   };
 
-  const handleUrlSubmit = () => {
-    const trimmed = businessUrl.trim();
-    if (!trimmed) return;
-    if (!isValidUrl(trimmed) || isSuspiciousUrl(trimmed)) {
+  const handleUrlSubmit = async () => {
+    const sanitizedUrl = sanitizeInput(businessUrl);
+    setErrorMessage(null);
+
+    if (!sanitizedUrl) return;
+
+    if (!validateURL(sanitizedUrl) || isSuspiciousUrl(sanitizedUrl)) {
+      setErrorMessage('❌ Invalid or unsupported URL. Please enter a valid business website (e.g. https://yourbusiness.tt).');
       setAgentStatus('error');
       return;
     }
+
     setAgentStatus('training');
-    setTimeout(() => setAgentStatus('ready'), 3000);
+
+    try {
+      await withCache(trimmedUrl, () => {
+        return new Promise(resolve => setTimeout(resolve, 3000));
+      });
+      setAgentStatus('ready');
+    } catch (error) {
+      const userFriendlyError = handleSecureError(error, 'AgentTraining');
+      setErrorMessage(userFriendlyError);
+      setAgentStatus('error');
+    }
   };
 
   // Loading spinner
@@ -91,7 +101,7 @@ function Home() {
             <input
               type="url"
               value={businessUrl}
-              onChange={(e) => setBusinessUrl(e.target.value)}
+              onChange={(e) => setBusinessUrl(sanitizeInput(e.target.value))}
               placeholder="https://yourbusiness.tt"
               className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
               aria-label="Enter your business website URL"
@@ -140,9 +150,9 @@ function Home() {
               />
             )}
 
-            {agentStatus === 'error' && (
+            {agentStatus === 'error' && errorMessage && (
               <Alert
-                message="❌ Invalid or unsupported URL. Please enter a valid business website (e.g. https://yourbusiness.tt)."
+                message={errorMessage}
                 type="error"
                 onClose={handleAlertClose}
               />
