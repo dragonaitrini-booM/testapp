@@ -73,7 +73,7 @@ export default function JoganiaSettings() {
     companyAddress: '123 Independence Square, Port of Spain, Trinidad & Tobago'
   });
 
-  const handleSave = async (section) => {
+  const handleSave = async (section: string) => {
     setIsSaving(true);
     // Simulate API call
     setTimeout(() => {
@@ -94,13 +94,13 @@ export default function JoganiaSettings() {
     setApiKeys([...apiKeys, newKey]);
   };
 
-  const deleteAPIKey = (id) => {
+  const deleteAPIKey = (id: number) => {
     if (confirm('Delete this API key? This action cannot be undone.')) {
       setApiKeys(apiKeys.filter(key => key.id !== id));
     }
   };
 
-  const copyToClipboard = (text) => {
+  const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     alert('Copied to clipboard!');
   };
