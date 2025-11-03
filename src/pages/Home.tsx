@@ -9,6 +9,7 @@ import { Button } from '../components/Button';
 import { withCache } from '../utils/cache';
 import { handleSecureError } from '../utils/errors';
 import { sanitizeInput, validateURL } from '../utils/validation';
+import MonitoringService from '../monitoring/performance';
 
 // Inline Zap (lightning) icon
 const ZapIcon = () => (
@@ -42,6 +43,10 @@ function Home() {
   };
 
   const handleUrlSubmit = async () => {
+    if (!MonitoringService.trackExpensiveAction('CreateAgent', 1)) {
+      return; // Block if action is duplicated
+    }
+
     const sanitizedUrl = sanitizeInput(businessUrl);
     setErrorMessage(null);
 
@@ -54,13 +59,16 @@ function Home() {
     }
 
     setAgentStatus('training');
+    const startTime = Date.now();
 
     try {
-      await withCache(trimmedUrl, () => {
+      await withCache(sanitizedUrl, () => {
         return new Promise(resolve => setTimeout(resolve, 3000));
       });
+      MonitoringService.trackAPICall('AgentTraining', startTime, true);
       setAgentStatus('ready');
     } catch (error) {
+      MonitoringService.trackAPICall('AgentTraining', startTime, false);
       const userFriendlyError = handleSecureError(error, 'AgentTraining');
       setErrorMessage(userFriendlyError);
       setAgentStatus('error');

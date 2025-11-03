@@ -7,14 +7,26 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "security-audit": "npm audit --audit-level moderate",
+    "security-check": "snyk test",
+    "security-watch": "npm audit --audit-level moderate --watch",
+    "monitor:performance": "lighthouse http://localhost:5173 --output=json --output-path=./reports/performance.json",
+    "monitor:accessibility": "axe http://localhost:5173 --save=./reports/accessibility.json",
+    "monitor:security": "npm audit --json > ./reports/security-audit.json",
+    "monitor:all": "npm run monitor:performance && npm run monitor:accessibility && npm run monitor:security",
+    "monitor:watch": "nodemon --watch src --exec 'npm run monitor:all'"
   },
   "dependencies": {
+    "axe-core": "^4.11.0",
+    "class-variance-authority": "^0.7.0",
+    "lighthouse": "^13.0.1",
+    "lucide-react": "^0.552.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.5",
-    "lucide-react": "^0.552.0",
-    "class-variance-authority": "^0.7.0"
+    "snyk": "^1.1300.2",
+    "web-vitals": "^5.1.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.2",
