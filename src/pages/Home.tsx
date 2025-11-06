@@ -1,10 +1,9 @@
 // src/pages/Home.tsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDatasetManager } from '../contexts/DatasetContext';
-import Chat from '../components/Chat';
 
 // ✅ Only import components that exist
+import ListGroup from '../components/ListGroup';
 import Alert from '../components/Alert';
 import { Button } from '../components/Button';
 
@@ -28,8 +27,6 @@ function Home() {
   type Status = 'idle' | 'training' | 'ready' | 'error';
   const [agentStatus, setAgentStatus] = useState<Status>('idle');
   const [businessUrl, setBusinessUrl] = useState('');
-  const { datasets } = useDatasetManager();
-  const activeDataset = datasets.find((d) => d.active);
 
   const isValidUrl = (url: string): boolean => {
     try {
@@ -80,7 +77,7 @@ function Home() {
             Single AI Agent Platform for Trinidad & Tobago Businesses
           </p>
           <p className="text-sm text-gray-500 mt-1">
-            Powered by Kimi K2 Instructor • Scraped by Fire Crawler
+            Powered by Kimi K1 • Scraped by Fire Crawler
           </p>
         </div>
 
@@ -131,7 +128,7 @@ function Home() {
             {agentStatus === 'training' && (
               <div className="flex items-center gap-2 text-blue-600">
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600" />
-                <span className="text-sm">Fire Crawler scraping • Kimi K2 learning...</span>
+                <span className="text-sm">Fire Crawler scraping • Kimi K1 learning...</span>
               </div>
             )}
 
@@ -159,7 +156,7 @@ function Home() {
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               📊 Agent Performance Dashboard
             </h2>
-            <Chat activeDataset={activeDataset} />
+            <ListGroup />
           </div>
         )}
 

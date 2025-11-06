@@ -1,60 +1,131 @@
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 
-const initialState = {
-  datasets: [
-    { id: 1, name: 'Marketing', documents: [], active: true },
-    { id: 2, name: 'Development', documents: [], active: false },
-    { id: 3, name: 'Sales', documents: [], active: false },
-  ],
+// Default configuration
+const defaultConfig = {
+activeDatasetIndex: 0,
+aiModel: 'Kimi K2 Instructor',
+temperature: 0.7,
+processingMode: 'Interactive', // 'Interactive' or 'Batch'
+datasets: [
+{
+id: 'dataset-1',
+name: 'Dataset 1',
+description: 'Upload your first business documents',
+documents: [],
+createdAt: new Date().toISOString(),
+lastModified: new Date().toISOString()
+},
+{
+id: 'dataset-2',
+name: 'Dataset 2',
+description: 'Upload your second set of documents',
+documents: [],
+createdAt: new Date().toISOString(),
+lastModified: new Date().toISOString()
+},
+{
+id: 'dataset-3',
+name: 'Dataset 3',
+description: 'Upload your third set of documents',
+documents: [],
+createdAt: new Date().toISOString(),
+lastModified: new Date().toISOString()
+}
+],
+theme: 'light'
 };
 
-function datasetManagerReducer(state, action) {
-  switch (action.type) {
-    case 'ADD_DATASET':
-      return {
-        ...state,
-        datasets: [...state.datasets, { id: Date.now(), name: action.payload.name, documents: [], active: false }],
-      };
-    case 'DELETE_DATASET':
-      return {
-        ...state,
-        datasets: state.datasets.filter((dataset) => dataset.id !== action.payload.id),
-      };
-    case 'ACTIVATE_DATASET':
-      return {
-        ...state,
-        datasets: state.datasets.map((dataset) => ({
-          ...dataset,
-          active: dataset.id === action.payload.id,
-        })),
-      };
-    case 'ADD_DOCUMENT':
-      return {
-        ...state,
-        datasets: state.datasets.map((dataset) =>
-          dataset.id === action.payload.datasetId
-            ? { ...dataset, documents: [...dataset.documents, action.payload.document] }
-            : dataset
-        ),
-      };
-    default:
-      return state;
-  }
+// Reducer for state management
+const datasetReducer = (state, action) => {
+switch (action.type) {
+case 'SET_ACTIVE_DATASET':
+return {
+...state,
+activeDatasetIndex: Math.max(0, Math.min(state.datasets.length - 1, action.payload))
+};
+
+case 'UPDATE_DATASET': {
+const { index, updates } = action.payload;
+const updatedDatasets = state.datasets.map((dataset, i) =>
+i === index
+? { ...dataset, ...updates, lastModified: new Date().toISOString() }
+: dataset
+);
+return { ...state, datasets: updatedDatasets };
 }
 
-export function useDatasetManagerReducer() {
-  const [state, dispatch] = useReducer(datasetManagerReducer, initialState);
-
-  const addDataset = (name) => dispatch({ type: 'ADD_DATASET', payload: { name } });
-  const deleteDataset = (id) => dispatch({ type: 'DELETE_DATASET', payload: { id } });
-  const activateDataset = (id) => dispatch({ type: 'ACTIVATE_DATASET', payload: { id } });
-  const addDocument = (datasetId, document) => dispatch({ type: 'ADD_DOCUMENT', payload: { datasetId, document } });
-
-  return {
-    ...state,
-    addDataset,
-    deleteDataset,
-    activateDataset,
-    addDocument,
-  };
+case 'ADD_DOCUMENT': {
+const { datasetIndex, document } = action.payload;
+const updatedDatasets = state.datasets.map((dataset, i) =>
+i === datasetIndex
+? {
+...dataset,
+documents: [...dataset.documents, document],
+lastModified: new Date().toISOString()
 }
+: dataset
+);
+return { ...state, datasets: updatedDatasets };
+}
+
+case 'REMOVE_DOCUMENT': {
+const { datasetIndex, documentId } = action.payload;
+const updatedDatasets = state.datasets.map((dataset, i) =>
+i === datasetIndex
+? {
+...dataset,
+documents: dataset.documents.filter(doc => doc.id !== documentId),
+lastModified: new Date().toISOString()
+}
+: dataset
+);
+return { ...state, datasets: updatedDatasets };
+}
+
+case 'UPDATE_SETTINGS': {
+return { ...state, ...action.payload };
+}
+
+case 'TOGGLE_THEME':
+return {
+...state,
+theme: state.theme === 'light' ? 'dark' : 'light'
+};
+
+case 'RESET_DATASET': {
+const { index } = action.payload;
+const updatedDatasets = state.datasets.map((dataset, i) =>
+i === index
+? {
+...dataset,
+documents: [],
+lastModified: new Date().toISOString()
+}
+: dataset
+);
+return { ...state, datasets: updatedDatasets };
+}
+
+case 'RESET_ALL':
+return defaultConfig;
+
+default:
+return state;
+}
+};
+
+// Custom hook
+export const useDatasetManager = () => {
+const [config, dispatch] = useReducer(datasetReducer, defaultConfig);
+
+// Apply theme
+useEffect(() => {
+if (typeof document !== 'undefined') {
+document.documentElement.classList.toggle('dark', config.theme === 'dark');
+}
+}, [config.theme]);
+
+return [config, dispatch];
+};
+
+export default useDatasetManager;

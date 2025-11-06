@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Bot, User, Building, Bell, Shield, Key, Globe, Mail, Phone, MapPin, Save, Eye, EyeOff, Copy, RefreshCw, Trash2, Plus, Check, AlertCircle, Settings as SettingsIcon, Database } from 'lucide-react';
-import DatasetManager from '../components/DatasetManager';
-import { useDatasetManager } from '../contexts/DatasetContext';
+import { Bot, User, Building, Bell, Shield, Key, Globe, Mail, Phone, MapPin, Save, Eye, EyeOff, Copy, RefreshCw, Trash2, Plus, Check, AlertCircle, Settings as SettingsIcon } from 'lucide-react';
 
 export default function JoganiaSettings() {
   const [activeTab, setActiveTab] = useState('profile');
@@ -75,8 +73,6 @@ export default function JoganiaSettings() {
     companyAddress: '123 Independence Square, Port of Spain, Trinidad & Tobago'
   });
 
-  const datasetManager = useDatasetManager();
-
   const handleSave = async (section) => {
     setIsSaving(true);
     // Simulate API call
@@ -115,7 +111,6 @@ export default function JoganiaSettings() {
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'api', label: 'API Keys', icon: Key },
     { id: 'billing', label: 'Billing', icon: Building },
-    { id: 'datasets', label: 'Datasets', icon: Database },
     { id: 'preferences', label: 'Preferences', icon: SettingsIcon }
   ];
 
@@ -384,16 +379,6 @@ export default function JoganiaSettings() {
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">Billing Information</h2>
                 {/* Placeholder for Billing Content */}
               </div>
-            )}
-
-            {/* DATASETS TAB */}
-            {activeTab === 'datasets' && (
-              <DatasetManager
-                datasets={datasetManager.datasets}
-                addDataset={datasetManager.addDataset}
-                deleteDataset={datasetManager.deleteDataset}
-                activateDataset={datasetManager.activateDataset}
-              />
             )}
 
             {/* PREFERENCES TAB */}
