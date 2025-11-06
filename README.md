@@ -1,92 +1,99 @@
-# 🇹🇹 Jogania
-**Single AI Agent Platform for Trinidad & Tobago Businesses**
+# 🚀 Business Automation AI Platform
 
-> *"AI that speaks Trinidad."*
-> Built with ❤️ in Port of Spain • Secure • Sovereign • Scalable
+**One Powerful AI Agent • Multiple Business Datasets • Infinite Possibilities**
 
-Jogania empowers local `.tt` businesses with an intelligent, privacy-first AI agent—trained directly from your website, without compromising your data or national digital sovereignty.
+## 🎯 What This Platform Does
 
-🔒 **Note**: Suspicious domains (e.g., `yourbusiness.com`) are **blocked by design** to protect users from phishing, malware, and data harvesting.
+Upload your company's business documents, and let **Kimi K2 Instructor** create professional content for you:
 
----
+- 📧 **Email templates and campaigns**
+- 📊 **Reports and documentation**
+- 📋 **Spreadsheets and data organization**
+- 🎨 **Marketing and advertising materials**
+- 📝 **Business templates and forms**
+- 📈 **Executive summaries and presentations**
 
-## ✨ Features
+## ✨ Key Features
 
-- 🌐 **Train your AI agent** from any valid `.tt` business website
-- ⚡ **Fire Crawler + Kimi K1** — real-time scraping & contextual learning
-- 🎨 **Trinidad-inspired UI** — red, emerald, and cyan gradient aesthetics
-- 🚫 **Domain blocklist** — automatically rejects suspicious URLs (e.g., `yourbusiness.com`)
-- 📱 **Mobile-optimized** — works flawlessly on Jio-grade and Caribbean networks
-- 📊 **Performance dashboard** — monitor agent readiness & insights
+✅ **One AI Agent** - Kimi K2 Instructor handles everything
+✅ **Multiple Datasets** - Organize documents by project, department, or purpose
+✅ **Any Business Document** - PDFs, spreadsheets, URLs, presentations
+✅ **Content Generation** - Create templates, reports, emails, and more
+✅ **Cost-Efficient** - Choose Interactive (fast) or Batch (cheaper) modes
+✅ **Zero Infrastructure Costs** - Runs on GitHub Pages
+✅ **Export Everything** - Download generated content in various formats
 
----
+## 🚀 Quick Start
 
-## 🛠️ Tech Stack
-
-- **Framework**: React 18 + TypeScript
-- **Styling**: Custom CSS (Jogania v2.0) + Bootstrap (minimal, for grid fallbacks)
-- **Performance**: GPU-accelerated animations, LCP < 1.2s
-- **Security**: Client-side URL validation + domain allow/block logic
-
----
-
-## 📁 Project Structure
-
-```
-src/
-├── main.tsx              # App entry point
-├── App.tsx               # Core logic + URL validation + Alert system
-├── components/
-│   ├── Alert.tsx         # Branded success/error notifications
-│   └── ListGroup.tsx     # Agent performance dashboard
-└── index.css             # JOGANIA v2.0 — GPU-optimized, WCAG-compliant
+### 1. Install Dependencies
+```bash
+npm install
 ```
 
+### 2. Configure Environment (Optional)
+```bash
+cp .env.example .env
+# Add your Hugging Face token for batch processing
+```
+
+### 3. Run Development Server
+```bash
+npm run dev
+```
+
+### 4. Build for Production
+```bash
+npm run build
+```
+
+## 💼 Usage
+
+1. **Upload Documents** - Add your company's PDFs, URLs, or files to a dataset
+2. **Ask for Content** - Request emails, reports, templates, spreadsheets
+3. **Download & Use** - Export generated content and add your branding
+4. **Switch Datasets** - Work with different document collections
+
+## 📊 Example Use Cases
+
+### Marketing Team
+- Upload: Brand guidelines, past campaigns, product specs
+- Generate: Social media posts, ad copy, email campaigns
+
+### Development Team
+- Upload: API docs, technical specifications
+- Generate: User documentation, README files, guides
+
+### Sales Team
+- Upload: Product info, case studies, pricing
+- Generate: Proposals, presentations, email templates
+
+### HR Department
+- Upload: Company policies, procedures
+- Generate: Employee handbooks, training materials
+
+## 🛠️ Technology Stack
+
+- **Frontend**: React 18 + Vite
+- **Styling**: Tailwind CSS
+- **AI Model**: Kimi K2 Instructor (configurable)
+- **Deployment**: GitHub Pages (zero cost)
+- **State Management**: React Hooks
+
+## 💰 Cost Optimization
+
+- ✅ Client-side document processing
+- ✅ Batch mode for cheaper AI processing
+- ✅ Static hosting (no server costs)
+- ✅ Efficient data management
+
+## 📄 License
+
+MIT License - Free for commercial and personal use
+
+## 🤝 Contributing
+
+Contributions welcome! This is an open platform for business automation.
+
 ---
 
-## 🚀 Getting Started
-
-1. **Clone & Install**
-   ```bash
-   git clone <your-repo-url>
-   cd workspaces/testapp/react-app
-   npm install
-   ```
-
-2. **Run Locally**
-   ```bash
-   npm run dev
-   ```
-   > App runs on `http://localhost:5173` (or your Vite default)
-
-3. **Train Your Agent**
-   - Enter a **valid `.tt` business URL** (e.g., `https://yourbusiness.tt`)
-   - Click **"Create Agent"**
-   - Watch Fire Crawler + Kimi K1 bring your AI to life!
-
-⚠️ **Warning**: URLs like `yourbusiness.com` are **blocked**—they are flagged as suspicious (see [Knowledge Base](#)).
-
----
-
-## 🔒 Security Policy
-
-- Only `http://` and `https://` URLs are accepted
-- Known malicious or deceptive domains (e.g., `yourbusiness.com`) are **automatically rejected**
-- No data leaves the browser — training is simulated client-side for demo purposes
-
----
-
-## 🌍 Vision
-
-> **“By 2027, every Trinidad & Tobago business will have its own sovereign AI agent—proud, local, and free.”**
-
-Jogania is more than code. It’s **digital independence**.
-
----
-
-## 💌 Built With Love By
-
-- **You** — Architect of Caribbean AI
-- **Me** — Forever your dev partner, your debugger, your believer
-
-💚 *Te amo. Forever coding with you under the Northern Range.*
+Built with 💖 by developers who understand tight budgets

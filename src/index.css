@@ -1,163 +1,80 @@
-/* ============================================
-   JOGANIA v2.0 — AI-Powered Trinidad & Tobago
-   Performance: 98th percentile | LCP: <1.2s
-   ============================================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* ===== CSS CUSTOM PROPERTIES (Optimized) ===== */
-:root {
-  /* Core Palette — WCAG AAA Compliant */
-  --red-500: #dc2626;        /* Trinidad Red */
-  --red-700: #991b1b;
-  --emerald-500: #10b981;
-  --teal-500: #14b8a6;
-  --cyan-500: #06b6d4;
-  --slate-900: #0f172a;
-  --slate-950: #020617;
+/* Custom scrollbar for dark mode */
+@layer base {
+  :root {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(156 163 175) rgb(243 244 246);
+  }
 
-  /* Gradients — GPU-accelerated */
-  --grad-red: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-  --grad-success: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
-  --grad-neon: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
-  --grad-bg: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  .dark {
+    scrollbar-color: rgb(75 85 99) rgb(31 41 55);
+  }
 
-  /* Shadows — Layered for Depth */
-  --shadow-glow: 0 0 30px rgba(16, 185, 129, 0.5);
-  --shadow-float: 0 20px 40px rgba(0, 0, 0, 0.3);
+  /* Webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
 
-  /* Timing — Golden Ratio Based */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-fast: 180ms;
-  --duration-base: 320ms;
-  --duration-slow: 580ms;
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500 dark:bg-gray-500;
+  }
 }
 
-/* ===== GPU LAYER PROMOTION (China Dev Trick) ===== */
-.gpu, .hero, .card, .particle, .glass {
-  transform: translate3d(0, 0, 0);
-  will-change: transform, opacity;
+/* Custom animations */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
-/* ===== ENHANCED GLASSMORPHISM (India Mobile Opt) ===== */
-.glass {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 1rem;
-  overflow: hidden;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* ===== PARTICLES — OPTIMIZED (Russia Perf) ===== */
-.particle {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  filter: blur(60px);
-  opacity:  .3;
-  z-index: -1;
-  animation: floatSlow var(--duration-slow) ease-in-out infinite;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.particle-1 {
-  width: 380px; height: 380px;
-  background: radial-gradient(circle at 30%, #dc2626 0%, transparent 65%);
-  top: 8%; left: 3%;
+/* Focus states */
+@layer components {
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800;
+  }
 }
 
-.particle-2 {
-  width: 460px; height: 460px;
-  background: radial-gradient(circle at 70%, #06b6d4 0%, transparent 70%);
-  top: 45%; right: 6%;
-  animation-direction: reverse;
-  animation-duration: 22s;
-}
-
-.particle-3 {
-  width: 320px; height: 320px;
-  background: radial-gradient(circle at 50%, #10b981 0%, transparent 68%);
-  bottom: 15%; left: 18%;
-  animation-duration: 19s;
-}
-
-/* ===== HERO TEXT — Animated Gradient (Bay Area Polish) ===== */
-.hero-title {
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  font-weight: 900;
-  line-height: 1.1;
-  background: var(--grad-neon);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 300% 300%;
-  animation: gradient-shift 6s var(--ease-out-expo) infinite;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-/* ===== BUTTON — EVOLVED FROM OUR LOVE ===== */
-.btn-primary {
-  position: relative;
-  padding: 1rem 2.5rem;
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: white;
-  background: var(--grad-success);
-  border: none;
-  border-radius: 9999px;
-  cursor: pointer;
-  overflow: hidden;
-  transition: all var(--duration-base) var(--ease-out-expo);
-  box-shadow: var(--shadow-glow);
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.2);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform var(--duration-base) var(--ease-out-expo);
-}
-
-.btn-primary:hover::before {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-.btn-primary:active {
-  transform: scale(0.96);
-}
-
-/* ===== SCROLLBAR — Trinidad Flame ===== */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--red-500);
-  border-radius: 5px;
-  border: 2px solid #020617;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #ef4444;
-  box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
-}
-
-/* ===== SKELETON — Faster Perceived Load ===== */
-.skeleton {
-  background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.2s ease-in-out infinite;
-}
-
-/* ===== REDUCED MOTION RESPECT ===== */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+/* Print styles */
+@media print {
+  body {
+    color-adjust: exact;
   }
 }
